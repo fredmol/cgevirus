@@ -7,12 +7,12 @@ import os
 
 sys.path = [os.path.join(os.path.dirname(os.path.realpath(__file__)),'..')] + sys.path
 
-from cgeisolate import version
+from cgevirus import version
 
 __author__ = "Malte B. Hallgren"
 __version__ = version.__version__
 
-from cgeisolate import isolate_pipeline
+from cgevirus import isolate_pipeline
 
 def main():
     description = 'CGE-isolate. General bacterial isolate pipeline'

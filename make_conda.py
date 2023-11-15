@@ -4,15 +4,15 @@ import sys
 
 sys.path = [os.path.join(os.path.dirname(os.path.realpath(__file__)), '')] + sys.path
 
-import cgeisolate.version as version
+import cgevirus.version as version
 
 data = {
     "package": {
-        "name": "cgeisolate",
+        "name": "cgevirus",
         "version": version.__version__
     },
     "source": {
-        "url": "https://github.com/genomicepidemiology/cgeisolate/archive/refs/tags/{}.tar.gz".format(version.__version__),
+        "url": "https://github.com/genomicepidemiology/cgevirus/archive/refs/tags/{}.tar.gz".format(version.__version__),
     },
     "build": {
         "number": 0,
@@ -30,7 +30,7 @@ data = {
         ]
     },
     "about": {
-        "home": "https://github.com/genomicepidemiology/cgeisolate",
+        "home": "https://github.com/genomicepidemiology/cgevirus",
         "summary": "Kmergenetyper test.",
         "license": "Apache-2.0"
     }

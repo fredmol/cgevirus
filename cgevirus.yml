@@ -1,4 +1,4 @@
-name: cgeisolate
+name: cgevirus
 channels:
   - conda-forge
   - bioconda
@@ -6,4 +6,4 @@ channels:
   - defaults
 dependencies:
   - kma
-  - kgt_mlst
+  - prokka
