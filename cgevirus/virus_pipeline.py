@@ -10,12 +10,12 @@ def virus_pipeline(args):
     # Check if kma is installed
     kma.KMARunner(args.input,
               args.output + "/virus_alignment",
-              args.db_dir + '/virus_db',
+              args.db_dir + '/virus_db/virus_db',
               "-ont -ca -1t1 -mem_mode").run()
 
     kma.KMARunner(args.input,
               args.output + "/cdd",
-              args.db_dir + '/cdd_db',
+              args.db_dir + '/cdd_db/cdd_db',
               "-ont -ca -1t1 -mem_mode").run()
 
     cmd = 'prokka -outdir {}/ --centre virus_alignment --prefix prokka_results {}/virus_alignment.fsa'.format(args.output, args.output)

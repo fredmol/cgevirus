@@ -33,10 +33,6 @@ def main():
 
     virus_pipeline.virus_pipeline(args)
 
-def check_illumina_pe(files):
-    if len(files) % 2 != 0:
-        sys.exit('Error: Illumina files must be paired-end. Exiting.')
-
 if __name__ == '__main__':
     main()
 
