@@ -26,5 +26,8 @@ def virus_pipeline(args):
 
     #Compile results TBD
 
+    #Same as for cgeisolate, compile all results into a file.
+        #Should be the CDD results, the prokka results, and the kma results (virus with top alignment score).
+
 
     return 'virus_pipeline'
