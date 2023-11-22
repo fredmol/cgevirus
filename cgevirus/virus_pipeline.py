@@ -18,7 +18,6 @@ def virus_pipeline(args):
     #          args.output + "/virus_alignment",
     #          args.db_dir + '/virus_db/virus_db',
     #          "-ont -ca -1t1 -mem_mode -t 8").run()
-    highest_scoring_hit = get_highest_scoring_hit_template(args.output + "/virus_alignment.res")
 
     #kma.KMARunner(args.input,
     #          args.output + "/cdd",
@@ -28,7 +27,7 @@ def virus_pipeline(args):
     #cmd = 'prokka -outdir {}/ --centre virus_alignment --kingdom Viruses --prefix prokka_results {}/virus_alignment.fsa --force'.format(args.output, args.output)
     #os.system(cmd)
 
-    report = create_virus_report(args, highest_scoring_hit)
+    report = create_virus_report(args)
     with open(args.output + "/virus_pipeline_report.txt", "w") as f:
         f.write(report)
 
