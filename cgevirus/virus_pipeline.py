@@ -49,7 +49,7 @@ def create_virus_report(args, highest_scoring_hit):
 
 
     # Prokka Results Section
-    prokka_file = os.path.join(args.output, "prokka_results", "prokka_results.tsv")
+    prokka_file = args.output + "/prokka_results.tsv"
     if os.path.exists(prokka_file):
         report += format_prokka_results(prokka_file)
     else:
