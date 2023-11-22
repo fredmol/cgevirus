@@ -28,7 +28,9 @@ def virus_pipeline(args):
     cmd = 'prokka -outdir {}/ --centre virus_alignment --kingdom Viruses --prefix prokka_results {}/virus_alignment.fsa --force'.format(args.output, args.output)
     os.system(cmd)
 
-    create_virus_report(args, highest_scoring_hit)
+    report = create_virus_report(args, highest_scoring_hit)
+    with open(args.output + "/virus_pipeline_report.txt", "w") as f:
+        f.write(report)
 
     return 'virus_pipeline'
 
