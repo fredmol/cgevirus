@@ -14,18 +14,16 @@ def virus_pipeline(args):
             args.db_dir = '/opt/cge/cge_db'
 
     os.system('mkdir ' + args.output)
-    # Check if kma is installed
-    #kma.KMARunner(args.input,
-    #          args.output + "/virus_alignment",
-    #          args.db_dir + '/virus_db/virus_db',
-    #          "-ont -ca -1t1 -mem_mode -t 8").run()
-
+    kma.KMARunner(args.input,
+              args.output + "/virus_alignment",
+              args.db_dir + '/virus_db/virus_db',
+              "-ont -ca -1t1 -mem_mode -t 8").run()
     highest_scoring_hit = get_highest_scoring_hit_template(args.output + "/virus_alignment.res")
 
-    #kma.KMARunner(args.input,
-    #          args.output + "/cdd",
-    #          args.db_dir + '/cdd_db/cdd_db',
-    #          "-ont -ca -1t1 -mem_mode -t 8").run()
+    kma.KMARunner(args.input,
+              args.output + "/cdd",
+              args.db_dir + '/cdd_db/cdd_db',
+              "-ont -ca -1t1 -mem_mode -t 8").run()
 
     cmd = 'prokka -outdir {}/ --centre virus_alignment --kingdom Viruses --prefix prokka_results {}/virus_alignment.fsa --force'.format(args.output, args.output)
     os.system(cmd)
@@ -35,7 +33,6 @@ def virus_pipeline(args):
     return 'virus_pipeline'
 
 def create_virus_report(args, highest_scoring_hit):
-    virus_alignment_results = highest_scoring_hit
     cdd_results = read_tab_separated_file(args.output + "/cdd.res")
 
     highest_scoring_hit = get_highest_scoring_hit_template(args.output + "/virus_alignment.res")
