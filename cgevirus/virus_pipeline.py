@@ -34,19 +34,26 @@ def virus_pipeline(args):
 
     return 'virus_pipeline'
 
-def create_virus_report(args, highest_scoring_hit):
+
+def create_virus_report(args):
     cdd_results = read_tab_separated_file(args.output + "/cdd.res")
 
-    highest_scoring_hit = get_highest_scoring_hit_template(args.output + "/virus_alignment.res")
+    highest_scoring_hit_details = get_highest_scoring_hit_details(args.output + "/virus_alignment.res")
 
+    # Updating the report section
     report = "Virus Pipeline Results Report\n"
     report += "=" * 60 + "\n"
 
     # Top Scoring Virus Alignment Hit
     report += "Top Scoring Virus Alignment Hit:\n"
     report += "-" * 60 + "\n"
-    report += f"Template: {highest_scoring_hit}\n\n"
-
+    if highest_scoring_hit_details:
+        report += f"Template: {highest_scoring_hit_details['#Template']}\n"
+        report += f"Identity: {highest_scoring_hit_details['Template_Identity']}, "
+        report += f"Coverage: {highest_scoring_hit_details['Template_Coverage']}, "
+        report += f"Depth: {highest_scoring_hit_details['Depth']}\n\n"
+    else:
+        report += "No virus alignment hits found.\n\n"
 
     # Prokka Results Section
     prokka_file = args.output + "/prokka_results.tsv"
@@ -99,3 +106,21 @@ def get_highest_scoring_hit_template(file_path):
                 continue
 
     return highest_scoring_hit['#Template'] if highest_scoring_hit else None
+
+
+def get_highest_scoring_hit_details(file_path):
+    with open(file_path, 'r') as file:
+        reader = csv.DictReader(file, delimiter='\t')
+        highest_scoring_hit = None
+        max_score = float('-inf')
+
+        for row in reader:
+            try:
+                score = float(row['Score'])
+                if score > max_score:
+                    highest_scoring_hit = row
+                    max_score = score
+            except ValueError:
+                continue
+
+    return highest_scoring_hit
