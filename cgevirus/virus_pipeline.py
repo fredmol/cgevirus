@@ -30,8 +30,45 @@ def virus_pipeline(args):
     cmd = 'prokka -outdir {}/ --centre virus_alignment --kingdom Viruses --prefix prokka_results {}/virus_alignment.fsa --force'.format(args.output, args.output)
     os.system(cmd)
 
+    create_virus_report(args, highest_scoring_hit)
+
     return 'virus_pipeline'
 
+def create_virus_report(args, highest_scoring_hit):
+    virus_alignment_results = highest_scoring_hit
+    cdd_results = read_tab_separated_file(args.output + "/cdd.res")
+
+    highest_scoring_hit = get_highest_scoring_hit_template(args.output + "/virus_alignment.res")
+
+    report = "Virus Pipeline Results Report\n"
+    report += "=" * 60 + "\n"
+
+    # Top Scoring Virus Alignment Hit
+    report += "Top Scoring Virus Alignment Hit:\n"
+    report += "-" * 60 + "\n"
+    report += f"Template: {highest_scoring_hit}\n\n"
+
+
+    # Prokka Results Section
+    prokka_file = os.path.join(args.output, "prokka_results", "prokka_results.tsv")
+    if os.path.exists(prokka_file):
+        report += format_prokka_results(prokka_file)
+    else:
+        report += "Prokka results not found.\n"
+
+    # CDD Results Section
+    report += format_results_section(cdd_results, "CDD Findings")
+
+    return report
+
+def format_prokka_results(prokka_file):
+    prokka_results = read_tab_separated_file(prokka_file, delimiter='\t')
+    report = "Prokka Results:\n"
+    report += "-" * 60 + "\n"
+    for result in prokka_results:
+        report += f"Locus Tag: {result['locus_tag']}, Type: {result['ftype']}, Length: {result['length_bp']} bp, Gene: {result.get('gene', 'N/A')}, EC Number: {result.get('EC_number', 'N/A')}, COG: {result.get('COG', 'N/A')}, Product: {result['product']}\n"
+    report += "\n"
+    return report
 
 def read_tab_separated_file(file_path):
     with open(file_path, 'r') as file:
