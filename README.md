@@ -26,7 +26,7 @@ Download the cge_db database:
 
 `tar -xvzf cge_db.tar.gz`
 
-`sudo mkdir -777 /opt/cge`
+`sudo mkdir -m 777 /opt/cge`
 
 `mv cge_db /opt/cge/.`
 
