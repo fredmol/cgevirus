@@ -7,8 +7,16 @@ name: Create Release
 
 jobs:
   conda-noarch:
-    runs-on: ubuntu-latest
-    container: conda/miniconda3:latest
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
 
     steps:
       - name: checkout repository
