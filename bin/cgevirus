@@ -20,10 +20,11 @@ def main():
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-i', action="store", type=str, dest='input',
                         default=None, help='Nanopore reads from a Virus sample.')
-    parser.add_argument('-f', action="store", type=str, dest='folder',
+    parser.add_argument('-f', action="store", dest='folder',
                         default=None, help='Folder with many smaller files of Nanopore reads.'
                                          'These will be merged into one file and analyzed.')
-
+    parser.add_argument('-name', action="store", dest='name',
+                        default=None, help='A costum name used if a folder is given as input.')
     parser.add_argument('-db_dir', action="store", dest='db_dir', default=None, help='Path to the folder with cge reference databases.'
                                       'This folder should contain a virus_db and cdd_db database indexed by kma.')
     parser.add_argument('-o', action="store", dest='output', help='Output directory')
