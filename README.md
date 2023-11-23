@@ -39,5 +39,8 @@ Standard Usage:
 If you have a folder of many fastq.gz files:
 `cgevirus -f <input_folder> -name <sample_name> -o <output_folder>`
 
+If your cge_db is not stored in /opt/cge/cge_db:
+`cgevirus -i <input_file> -o <output_file> -db_dir <path_to_cge_db>`
+
 Help Message:
 `cgevirus -h`
