@@ -27,7 +27,7 @@ data = {
         "run": [
             "python >=3.6",
             "kma >=1.4.9",
-            "prokka"
+            "prokka >=1.14.6"
         ]
     },
     "about": {
