@@ -1,4 +1,4 @@
-name: noarch-build
+name: anaconda-client-env
 channels:
   - conda-forge
   - bioconda

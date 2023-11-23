@@ -39,7 +39,6 @@ jobs:
 
       - name: build conda package
         run: |
-          conda install -c anaconda anaconda-client
           conda mambabuild -c conda-forge -c bioconda -c defaults conda/ --output-folder .
 
       - name: upload conda package
