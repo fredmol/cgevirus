@@ -18,6 +18,10 @@ or if you have mamba installed for faster installation:
 
 `mamba install -c genomicepidemiology cgevirus`
 
+Mamba can be installed with:
+
+`conda install -c conda-forge mamba`
+
 # Datebase
 
 Download the cge_db database:
