@@ -26,12 +26,13 @@ data = {
         ],
         "run": [
             "python >=3.6",
-            "kma >=1.4.9"
+            "kma >=1.4.9",
+            "prokka"
         ]
     },
     "about": {
         "home": "https://github.com/genomicepidemiology/cgevirus",
-        "summary": "Kmergenetyper test.",
+        "summary": "CGE Virus Pipeline",
         "license": "Apache-2.0"
     }
 }
