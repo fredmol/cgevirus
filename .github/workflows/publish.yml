@@ -1,6 +1,5 @@
 on:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
       - '*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
@@ -8,16 +7,8 @@ name: Create Release
 
 jobs:
   conda-noarch:
-    name: ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    defaults:
-      run:
-        shell: bash -l {0}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest ]
+    runs-on: ubuntu-latest
+    container: conda/miniconda3:latest
 
     steps:
       - name: checkout repository
@@ -28,18 +19,12 @@ jobs:
           pip install PyYAML
           python make_conda.py
 
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          python-version: 3.6
-          mamba-version: "*"
-          channels: conda-forge,bioconda,defaults
-          channel-priority: true
-          activate-environment: anaconda-client-env
-          environment-file: envs/noarch-build.yml
+      - name: Install conda-build
+        run: conda install conda-build
 
       - name: build conda package
         run: |
-          conda mambabuild -c conda-forge -c bioconda -c defaults conda/ --output-folder .
+          conda build -c conda-forge -c bioconda -c defaults conda/ --output-folder .
 
       - name: upload conda package
         run: |
