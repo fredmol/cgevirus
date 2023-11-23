@@ -2,15 +2,35 @@
 
 # Installation
 
-cgevirus typer requires kma (>=1.4.0) to be installed and usable directly from path (i.e. $kma).
-This can be done by installing kma from source or using conda:
+The following Conda channels are required:
 
-`conda create -n cgevirus -f cgevirus.yml`
+`conda config --add channels defaults`
 
-`conda activate cgevirus`
+`conda config --add channels bioconda`
 
-`pip install cgevirus`
+`conda config --add channels conda-forge`
+
+Now install the package:
+
+`conda install -c genomicepidemiology cgevirus`
+
+# Datebase
+
+Download the cge_db database:
+
+`wget https://cge.food.dtu.dk/services/MINTyper/cge_db.tar.gz`
+`tar -xvzf cge_db.tar.gz`
+`sudo mkdir -777 /opt/cge`
+`mv cge_db /opt/cge/.`
+
 
 # Usage
 
+Standard Usage:
+`cgevirus -i <input_file> -o <output_file>`
+
+If you have a folder of many fastq.gz files:
+`cgevirus -f <input_folder> -name <sample_name> -o <output_folder>`
+
+Help Message:
 `cgevirus -h`
