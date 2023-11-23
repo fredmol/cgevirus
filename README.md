@@ -1,4 +1,4 @@
-# cgevirus (k-mer gene typer)
+# cgevirus
 
 # Installation
 
