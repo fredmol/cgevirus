@@ -23,8 +23,11 @@ or in you have mamba installed for faster installation:
 Download the cge_db database:
 
 `wget https://cge.food.dtu.dk/services/MINTyper/cge_db.tar.gz`
+
 `tar -xvzf cge_db.tar.gz`
+
 `sudo mkdir -777 /opt/cge`
+
 `mv cge_db /opt/cge/.`
 
 
