@@ -28,14 +28,19 @@ jobs:
           pip install PyYAML
           python make_conda.py
 
-      - uses: mamba-org/setup-micromamba@v1
+      - uses: conda-incubator/setup-miniconda@v2
         with:
+          python-version: 3.6
+          mamba-version: "*"
+          channels: conda-forge,bioconda,defaults
+          channel-priority: true
+          activate-environment: anaconda-client-env
           environment-file: envs/noarch-build.yml
 
       - name: build conda package
         run: |
           conda install -c anaconda anaconda-client
-          conda mambabuild -c conda-forge -c default -c bioconda conda/ --output-folder .
+          conda mambabuild -c conda-forge -c bioconda -c defaults conda/ --output-folder .
 
       - name: upload conda package
         run: |
