@@ -10,11 +10,11 @@ The following Conda channels are required:
 
 `conda config --add channels conda-forge`
 
-Now install the package:
+Now install the package (Might take some time if using conda):
 
 `conda install -c genomicepidemiology cgevirus`
 
-or in you have mamba installed for faster installation:
+or if you have mamba installed for faster installation:
 
 `mamba install -c genomicepidemiology cgevirus`
 
