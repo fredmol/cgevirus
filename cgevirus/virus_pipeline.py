@@ -42,9 +42,9 @@ def virus_pipeline(args):
 
     return 'virus_pipeline'
 
-def merge_fastq_files(source_directory, output_name):
+def merge_fastq_files_unix(source_directory, output_name):
     """
-    Merge all fastq.gz files in the given directory and save the output with the specified name in the home directory.
+    Merge all fastq.gz files in the given directory using Unix commands and save the output with the specified name in the home directory.
 
     Args:
     source_directory (str): Path to the directory containing fastq.gz files.
@@ -56,19 +56,14 @@ def merge_fastq_files(source_directory, output_name):
     # Output file path with the specified name
     output_file = os.path.join(home_directory, f'{output_name}.fastq.gz')
 
-    # Get a list of all fastq.gz files in the source directory
-    fastq_files = [f for f in os.listdir(source_directory) if f.endswith('.fastq.gz')]
+    # Creating the Unix command for concatenation
+    cmd = f'cat {source_directory}/*.fastq.gz > {output_file}'
 
-    # Open the output file in write mode
-    with gzip.open(output_file, 'wb') as f_out:
-        # Iterate over each file and append its content to the output file
-        for file in fastq_files:
-            file_path = os.path.join(source_directory, file)
-            with gzip.open(file_path, 'rb') as f_in:
-                # Copy the content of each file to the output file
-                f_out.writelines(f_in)
+    # Executing the command
+    subprocess.run(cmd, shell=True, check=True)
 
     print(f"All files merged into {output_file}")
+
 def create_virus_report(args):
     cdd_results = read_tab_separated_file(args.output + "/cdd.res")
 
