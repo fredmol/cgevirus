@@ -14,6 +14,10 @@ Now install the package:
 
 `conda install -c genomicepidemiology cgevirus`
 
+or in you have mamba installed for faster installation:
+
+`mamba install -c genomicepidemiology cgevirus`
+
 # Datebase
 
 Download the cge_db database:
