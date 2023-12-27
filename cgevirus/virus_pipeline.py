@@ -6,41 +6,43 @@ import gzip
 
 from cgevirus import kma
 
-
 def virus_pipeline(args):
-    if args.folder is not None:
-        if args.name is None:
-            sys.exit('Please provide a name for the merged file')
-        else:
-            merge_fastq_files_unix(args.folder, args.name)
-            args.input = os.path.join(os.path.expanduser('~'), args.name + '.fastq.gz')
-            #args.output = os.path.join(os.path.expanduser('~'), args.name)
+    print("Starting the virus pipeline...")
 
     if args.db_dir is None:
-        if not os.path.exists('/opt/cge/cge_db'):
-            sys.exit('Please install the cge_db. It should be located in /opt/cge/cge_db')
+        if not os.path.exists('/var/lib/cge/database/cge_db'):
+            sys.exit('Please install the cge_db. It should be located in /var/lib/cge/database/cge_db')
         else:
-            args.db_dir = '/opt/cge/cge_db'
+            args.db_dir = '/var/lib/cge/database/cge_db'
+            print(f"Using CGE database directory: {args.db_dir}")
 
-    os.system('mkdir ' + args.output)
+    print(f"Creating output directory: {args.output}")
+    os.system('mkdir -p ' + args.output)
+
+    print(f"Running KMA for virus alignment on input: {args.input}")
     kma.KMARunner(args.input,
-              args.output + "/virus_alignment",
-              args.db_dir + '/virus_db/virus_db',
-              "-ont -ca -1t1 -mem_mode -t 8").run()
+                  args.output + "/virus_alignment",
+                  args.db_dir + '/virus_db/virus_db',
+                  "-ont -ca -1t1 -mem_mode -t 8").run()
 
+    print("Running KMA for CDD...")
     kma.KMARunner(args.input,
-              args.output + "/cdd",
-              args.db_dir + '/cdd_db/cdd_db',
-              "-ont -ca -1t1 -mem_mode -t 8").run()
+                  args.output + "/cdd",
+                  args.db_dir + '/cdd_db/cdd_db',
+                  "-ont -ca -1t1 -mem_mode -t 8").run()
 
+    print("Running Prokka for annotation...")
     cmd = 'prokka -outdir {}/ --centre virus_alignment --kingdom Viruses --prefix prokka_results {}/virus_alignment.fsa --force'.format(args.output, args.output)
     os.system(cmd)
 
+    print("Creating virus pipeline report...")
     report = create_virus_report(args)
-    with open(args.output + "/virus_pipeline_report.txt", "w") as f:
+    with open(args.output + "/report.txt", "w") as f:
         f.write(report)
 
+    print("Virus pipeline completed successfully. Report generated and stored at {}.".format(args.output + "/report.txt"))
     return 'virus_pipeline'
+
 
 def merge_fastq_files_unix(source_directory, output_name):
     """
