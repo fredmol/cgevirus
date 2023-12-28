@@ -16,6 +16,9 @@ def virus_pipeline(args):
             args.db_dir = '/var/lib/cge/database/cge_db'
             print(f"Using CGE database directory: {args.db_dir}")
 
+    if args.output is None:
+        args.output = '/var/lib/cge/results/{}'.format(args.name)
+
     print(f"Creating output directory: {args.output}")
     os.system('mkdir -p ' + args.output)
 
