@@ -81,7 +81,7 @@ def create_virus_report(args):
     highest_scoring_hit_details = get_highest_scoring_hit_details(args.output + "/virus_alignment.res")
 
     # Updating the report section
-    report = "Virus Pipeline Results Report\n"
+    report = "Virus Analysis report: {}\n".format(args.name)
     report += "=" * 60 + "\n"
 
     # Top Scoring Virus Alignment Hit
