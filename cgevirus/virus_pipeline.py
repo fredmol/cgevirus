@@ -9,6 +9,12 @@ from cgevirus import kma
 def virus_pipeline(args):
     print("Starting the virus pipeline...")
 
+    # Check if output folder already exists
+    output_dir = '/var/lib/cge/results/{}'.format(args.name)
+    if os.path.exists(output_dir):
+        sys.exit(
+            f"Error: Output directory '{output_dir}' already exists. Please choose a different name or delete the existing directory.")
+
     if args.db_dir is None:
         if not os.path.exists('/var/lib/cge/database/cge_db'):
             sys.exit('Please install the cge_db. It should be located in /var/lib/cge/database/cge_db')
