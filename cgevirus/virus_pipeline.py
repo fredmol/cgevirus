@@ -3,6 +3,7 @@ import sys
 import subprocess
 import csv
 import gzip
+import shutil
 
 from cgevirus import kma
 
@@ -27,6 +28,10 @@ def virus_pipeline(args):
 
     print(f"Creating output directory: {args.output}")
     os.system('mkdir -p ' + args.output)
+
+    # Copy the input FASTQ file to the output directory
+    print(f"Copying input FASTQ file to the output directory: {args.input} -> {args.output}")
+    shutil.copy(args.input, args.output)
 
     print(f"Running KMA for virus alignment on input: {args.input}")
     kma.KMARunner(args.input,
