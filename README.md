@@ -1,5 +1,7 @@
 # cgevirus
 
+This tool was developed to analyse virus isolates. 
+
 # Installation
 
 The following Conda channels are required:
