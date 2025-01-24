@@ -16,9 +16,19 @@ setup(
     include_package_data=True,
     url='https://https://github.com/MBHallgren/cgevirus',
     license='',
-    install_requires=(),
+    install_requires=[
+        'weasyprint>=63.0',
+        'Jinja2>=3.1.4',
+        'matplotlib>=3.9.2'
+    ],
     author='Malte B. Hallgren',
     scripts=['bin/cgevirus'],
     author_email='malhal@food.dtu.dk',
     description='cgevirus - K-mer Gene Typer',
+    package_data={
+        'cgevirus': [
+            'templates/*',
+            'assets/*',
+        ],
+    },
 )

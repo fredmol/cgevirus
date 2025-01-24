@@ -44,3 +44,8 @@ If your cge_db is not stored in /opt/cge/cge_db:
 
 Help Message:
 `cgevirus -h`
+
+# Report Generation
+CGEvirus now generates both text and PDF reports. The PDF report includes:
+- Virus identification with coverage metrics
+- Gene annotations from Prokka
