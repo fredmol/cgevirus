@@ -55,12 +55,6 @@ def virus_pipeline(args):
                   args.db_dir + '/virus_db/virus_db',
                   "-ont -ca -1t1 -mem_mode -t 8 -ef").run()
 
-    print("Running KMA for CDD...")
-    kma.KMARunner(args.input,
-                  args.output + "/cdd",
-                  args.db_dir + '/cdd_db/cdd_db',
-                  "-ont -ca -1t1 -mem_mode -t 8").run()
-
     print("Running Prokka for annotation...")
     cmd = 'prokka -outdir {}/ --centre virus_alignment --kingdom Viruses --prefix prokka_results {}/virus_alignment.fsa --force'.format(args.output, args.output)
     os.system(cmd)
@@ -74,7 +68,6 @@ def virus_pipeline(args):
     
     # Add these lines for PDF report generation
     print("Creating PDF report...")
-    cdd_results = read_tab_separated_file(args.output + "/cdd.res")
     highest_scoring_hit_details = get_highest_scoring_hit_details(args.output + "/virus_alignment.res")
     
     # Read Prokka results
@@ -83,7 +76,7 @@ def virus_pipeline(args):
     if os.path.exists(prokka_file):
         prokka_results = read_tab_separated_file(prokka_file)
 
-    pdf_path = create_pdf_report(args, highest_scoring_hit_details, cdd_results, prokka_results)
+    pdf_path = create_pdf_report(args, highest_scoring_hit_details, prokka_results)
     if pdf_path:
         print(f"PDF report generated and stored at: {pdf_path}")
 
@@ -116,7 +109,6 @@ def merge_fastq_files_unix(source_directory, output_name):
     print(f"All files merged into {output_file}")
 
 def create_virus_report(args):
-    cdd_results = read_tab_separated_file(args.output + "/cdd.res")
 
     highest_scoring_hit_details = get_highest_scoring_hit_details(args.output + "/virus_alignment.res")
 
@@ -141,9 +133,6 @@ def create_virus_report(args):
         report += format_prokka_results(prokka_file)
     else:
         report += "Prokka results not found.\n"
-
-    # CDD Results Section
-    report += format_results_section(cdd_results, "CDD Findings")
 
     return report
 
@@ -260,7 +249,7 @@ def get_file_stats(input_file, output_dir):
         'kma_version': kma_version if kma_version else 'N/A'
     }
 
-def create_pdf_report(args, highest_scoring_hit_details, cdd_results, prokka_results):
+def create_pdf_report(args, highest_scoring_hit_details, prokka_results):
     """Generate a PDF report for the virus analysis"""
     try:
         # Setup paths
@@ -286,10 +275,8 @@ def create_pdf_report(args, highest_scoring_hit_details, cdd_results, prokka_res
             'identity_value': 'N/A',
             'coverage_value': 'N/A',
             'depth_value': 'N/A',
-            'cdd_count': len(cdd_results) if cdd_results else 0,
             'gene_count': len(prokka_results) if prokka_results else 0,
             'gc_content': calculate_gc_content(args.output + "/virus_alignment.fsa"),
-            'cdd_results': [],
             'prokka_results': [],
             'additional_virus_hits': [],
             'has_multiple_hits': False
@@ -336,15 +323,6 @@ def create_pdf_report(args, highest_scoring_hit_details, cdd_results, prokka_res
                 template_data['depth_value'] = f"{float(highest_scoring_hit_details['Depth']):.2f}"
             except (KeyError, ValueError):
                 pass
-
-        # Format CDD results
-        if cdd_results:
-            template_data['cdd_results'] = [{
-                'template': result.get('#Template', 'Unknown'),
-                'identity': f"{float(result.get('Template_Identity', '0')):.2f}",
-                'coverage': f"{float(result.get('Template_Coverage', '0')):.2f}",
-                'depth': f"{float(result.get('Depth', '0')):.2f}"
-            } for result in cdd_results]
 
         # Format Prokka results
         if prokka_results:

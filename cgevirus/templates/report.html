@@ -109,10 +109,6 @@
 					<span class="detail-label">Depth</span>
 				</div>
 				<div class="detail-item">
-					<span class="detail-value">{{ cdd_count }}</span>
-					<span class="detail-label">CDD Domains</span>
-				</div>
-				<div class="detail-item">
 					<span class="detail-value">{{ gene_count }}</span>
 					<span class="detail-label">Predicted Genes</span>
 				</div>
@@ -174,33 +170,6 @@
                             <td>{{ gene.length_bp }}</td>
                             <td>{{ gene.gene if gene.gene else 'N/A' }}</td>
                             <td>{{ gene.product }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- CDD Results -->
-        <div class="section main-section">
-            <h2>Conserved Domain Detection</h2>
-            <div class="data-table-container">
-                <table class="analysis-table">
-                    <thead>
-                        <tr>
-                            <th>Domain</th>
-                            <th>Identity (%)</th>
-                            <th>Coverage (%)</th>
-                            <th>Depth</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for domain in cdd_results %}
-                        <tr>
-                            <td>{{ domain.template }}</td>
-                            <td>{{ domain.identity }}</td>
-                            <td>{{ domain.coverage }}</td>
-                            <td>{{ domain.depth }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
